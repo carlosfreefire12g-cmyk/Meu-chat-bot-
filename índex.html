@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Chat Bot</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .chat {
+      width: 100%;
+      max-width: 500px;
+      height: 100vh;
+      background: #111827;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topo {
+      padding: 18px;
+      background: #1f2937;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      border-bottom: 1px solid #374151;
+    }
+
+    #mensagens {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+    }
+
+    .mensagem {
+      padding: 12px 15px;
+      margin: 8px 0;
+      border-radius: 15px;
+      max-width: 85%;
+      line-height: 1.4;
+      word-wrap: break-word;
+    }
+
+    .usuario {
+      background: #2563eb;
+      margin-left: auto;
+    }
+
+    .bot {
+      background: #374151;
+      margin-right: auto;
+    }
+
+    .entrada {
+      display: flex;
+      padding: 12px;
+      background: #1f2937;
+      gap: 8px;
+    }
+
+    #pergunta {
+      flex: 1;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      outline: none;
+      font-size: 16px;
+      background: #374151;
+      color: white;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 0 18px;
+      background: #2563eb;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    button:active {
+      background: #1d4ed8;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="chat">
+
+    <div class="topo">
+      🤖 Meu Chat Bot
+    </div>
+
+    <div id="mensagens">
+      <div class="mensagem bot">
+        Olá! 👋 Eu sou seu chatbot. Como posso ajudar?
+      </div>
+    </div>
+
+    <div class="entrada">
+      <input
+        id="pergunta"
+        type="text"
+        placeholder="Digite sua mensagem..."
+        autocomplete="off"
+      >
+
+      <button onclick="enviarMensagem()">
+        Enviar
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const pergunta = document.getElementById("pergunta");
+    const mensagens = document.getElementById("mensagens");
+
+    function adicionarMensagem(texto, tipo) {
+      const div = document.createElement("div");
+      div.className = "mensagem " + tipo;
+      div.textContent = texto;
+
+      mensagens.appendChild(div);
+      mensagens.scrollTop = mensagens.scrollHeight;
+    }
+
+    async function enviarMensagem() {
+      const texto = pergunta.value.trim();
+
+      if (!texto) return;
+
+      adicionarMensagem(texto, "usuario");
+
+      pergunta.value = "";
+
+      adicionarMensagem("Digitando...", "bot");
+
+      // A conexão com a IA será colocada aqui
+      // depois que configurarmos o servidor seguro.
+
+      setTimeout(() => {
+        const bots = document.querySelectorAll(".bot");
+        bots[bots.length - 1].textContent =
+          "Recebi sua mensagem! Agora vamos conectar este chatbot à IA. 🤖";
+      }, 700);
+    }
+
+    pergunta.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        enviarMensagem();
+      }
+    });
+  </script>
+
+</body>
+</html>
